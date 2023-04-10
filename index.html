@@ -14,7 +14,7 @@
     <section>
         <h1>NEW BLOG</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium commodi sunt ipsum voluptate sint beatae perferendis nemo nulla nesciunt earum? Tempora at sapiente veniam iusto ipsam doloribus molestiae modi exercitationem.</p>
-        <form action="/" method="post">
+        <form action="/bleh" method="post">
             <label for="heading">Heading/Title of the blog post</label>
             <input type="text" name="heading" id="">
             <label for="content">Content</label>
@@ -25,6 +25,18 @@
             <input type="email" name="mail" id="">
             <button type="submit">POST</button>
         </form>
+        <div class="posts">
+            <div class="post">
+                <h2 class="title"></h2>
+                <address>
+                    <b class="author"></b>
+                    <b class="mailid"></b>
+                </address>
+                <p class="content"></p>
+            </div>
+        </div>
     </section>
+
+    <script type="module" src="./getdata.js"></script>
 </body>
 </html>
