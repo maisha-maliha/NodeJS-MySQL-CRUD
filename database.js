@@ -8,8 +8,6 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-// GET DATA FROM USERINFO TABLE
-
 function calling(){
   var userinfo = 'let profile = [';
   connection.query('SELECT * FROM userinfo;', function (error, results, fields) {
@@ -20,7 +18,6 @@ function calling(){
     userinfo += '];';
     fs.writeFile('./data.js',userinfo, err =>{if(err) console.log(err)});
   });
-
   // GET DATA FROM BLOGPOST TABLE
   connection.query('SELECT * FROM blogpost', (err, result, fields)=>{
     if (err) throw err;
@@ -31,8 +28,6 @@ function calling(){
     userinfo += ']; export {profile, posts};'
     fs.appendFile("./data.js", userinfo, (err) => {if (err) console.log(err)});
   });
-  console.log("calling called");
 }
 calling();
-//connection.end();
 module.exports = {calling : calling, connection : connection};

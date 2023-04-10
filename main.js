@@ -4,6 +4,7 @@ const database = require('./database');
 
 // SERVER CREATION
 http.createServer((req, res)=>{
+    console.log(req.url + " " + req.method);
     // ALL SERVER REQUEST AND RESPONSE
     if(req.url == '/'){
         res.writeHead(200,{'Content-Type':'text/html'});
@@ -11,8 +12,6 @@ http.createServer((req, res)=>{
         res.end(data);
     }
     if(req.method ==='POST' && req.url == '/'){
-        console.log(req.url + ' ' + req.method);
-        database.connection;
         let ResponseInfo = '';
         req.on('data', chunk =>{
             let data, ResponseObj;
@@ -66,3 +65,5 @@ http.createServer((req, res)=>{
         res.end(data);
     }
 }).listen(3000); // CREATED SERVER LISTENTING PORT
+
+// havent closed database connection
