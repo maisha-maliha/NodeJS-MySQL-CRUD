@@ -1,28 +1,19 @@
 const http = require('http');
-const mysql = require('mysql2');
 const fs = require('fs');
-require('./database');
+const database = require('./database');
 
-// SEND DATA TO DATABSAE
-function sendData(name, mail, heading, content){
-    // SEND DATA TO USERINFO DATABASE TABLE
-    connection.query(`INSET INTO userinfo (PersonName, mail) values (${name},${mail});`);
-    // SEND DATA TO BLOGPOST DATABASE TABLE
-    connection.query('SELECT COUNT(postID) FROM blogpost;',(err, result, fields)=>{
-        let x = result[0]['COUNT(postID)'] + 1;
-        connection.query(`INSERT INTO blogpost (postID, title, content, personame) VALUES (${x}, ${heading}, ${content},${name});`);
-    });
-}
 // SERVER CREATION
-let server = http.createServer((req, res)=>{
-    let ResponseInfo = '';
+http.createServer((req, res)=>{
     // ALL SERVER REQUEST AND RESPONSE
     if(req.url == '/'){
         res.writeHead(200,{'Content-Type':'text/html'});
         let data = fs.readFileSync("./index.html", "utf-8");
         res.end(data);
     }
-    if(req.method ==='POST'){
+    if(req.method ==='POST' && req.url == '/'){
+        console.log(req.url + ' ' + req.method);
+        database.connection;
+        let ResponseInfo = '';
         req.on('data', chunk =>{
             let data, ResponseObj;
             // CONVERTING DATA TO OBJECT
@@ -32,14 +23,25 @@ let server = http.createServer((req, res)=>{
             ResponseObj ='{';
             ResponseInfo.forEach(element => {
                 data = element.split("=");
-                ResponseObj += `"${data[0]}" : "${data[1]}",`;
+                ResponseObj += `"${data[0]}" : "${data[1].split('+').join(' ')}",`;
             });
             ResponseObj += '"nothing":"nothing"}';
             ResponseInfo = JSON.parse(ResponseObj);
-
-            // SENDING DATA
-            sendData(ResponseInfo.name, ResponseInfo.mail, ResponseInfo.heading, ResponseInfo.content);
-            res.end(); // RESPONSE ENDING
+            // SEND DATA ONLY IF ALL INPUTS HAVE VALUE
+            if(ResponseInfo.name != '' && ResponseInfo.mail != "" && ResponseInfo.heading !='' && ResponseInfo.content!=''){
+                // SENDING DATA TO USERINFO
+                database.connection.query(`insert into userinfo (PersonName, mail) values ("${ResponseInfo.name}", "${ResponseInfo.mail}")`, (err, resp)=>{
+                    if(err) throw err;
+                });
+                // COUNTING TOTAL ROWS IN BLOGPOST
+                database.connection.query('SELECT COUNT(postID) FROM blogpost', (err,resp)=>{
+                    if (err) throw err
+                    // SEND DATA TO BLOGPOST TALBLE
+                    database.connection.query( `insert into blogpost (postID, title, content, personame) values ( ${resp[0]['COUNT(postID)']+1},"${ResponseInfo.heading}", "${ResponseInfo.content}", "${ResponseInfo.name}")`, (err, res)=>{
+                        if(err) throw err;
+                    });
+                });
+            }
         });
     }
     if(req.url == '/style.css'){
@@ -47,15 +49,20 @@ let server = http.createServer((req, res)=>{
         let data = fs.readFileSync("./style.css", "utf-8");
         res.end(data);
     }
-    if(req.url == '/getdata.js'){
-        res.writeHead(200,{'Content-Type':'text/javascript'});
-        let data = fs.readFileSync("./getdata.js", "utf-8");
-        res.end(data);
-    }
     if(req.url == '/data.js'){
         res.writeHead(200,{'Content-Type':'text/javascript'});
         let data = fs.readFileSync("./data.js", "utf-8");
         res.end(data);
     }
-}).listen(4000); // CREATED SERVER LISTENTING PORT
-//connection.end(); // DATABASE CONNECTION END
+    if(req.url == '/setdata.js'){
+        res.writeHead(200,{'Content-Type':'text/javascript'});
+        let data = fs.readFileSync("./setdata.js", "utf-8");
+        res.end(data);
+    }
+    if(req.url == '/blogpost'){
+        res.writeHead(200,{'Content-Type':'text/html'});
+        database.calling(); // UPDATING data.js FILE
+        let data = fs.readFileSync("./blogpost.html", "utf-8");
+        res.end(data);
+    }
+}).listen(3000); // CREATED SERVER LISTENTING PORT

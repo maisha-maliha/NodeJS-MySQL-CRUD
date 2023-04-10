@@ -14,6 +14,9 @@ section{
     max-width: 600px;
     margin: 50px auto;
 }
+form,.posts{
+    margin: 15px 0;
+}
 label{
     font-weight: 700;
 }
@@ -22,4 +25,11 @@ input{
     width: 300px;
     padding: 5px;
     margin-bottom: 10px;
+}
+a{
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: rgb(230, 90, 255);
+    color: black;
+    border-radius: 5px;
 }
