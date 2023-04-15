@@ -16,7 +16,7 @@ function calling(){
       userinfo += '{ id : "'+element.ID+'",'+ 'name: "'+element.PersonName+'", '+'email: "'+element.mail+'"},';
     });
     userinfo += '];';
-    fs.writeFile('./data.js',userinfo, err =>{if(err) console.log(err)});
+    fs.writeFile('./sources/data.js',userinfo, err =>{if(err) console.log(err)});
   });
   // GET DATA FROM BLOGPOST TABLE
   connection.query('SELECT * FROM blogpost', (err, result, fields)=>{
@@ -26,8 +26,9 @@ function calling(){
       userinfo += '{ postid : "'+element.postID+'",'+ 'title: "'+element.title+'", '+'content: "'+element.content+'", '+'personame: "' + element.personame + '"},';
     });
     userinfo += ']; export {profile, posts};'
-    fs.appendFile("./data.js", userinfo, (err) => {if (err) console.log(err)});
+    fs.appendFile("./sources/data.js", userinfo, (err) => {if (err) console.log(err)});
   });
+  console.log("database triggered");
 }
 calling();
 module.exports = {calling : calling, connection : connection};

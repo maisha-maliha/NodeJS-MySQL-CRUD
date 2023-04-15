@@ -29,7 +29,30 @@ input{
 a{
     text-decoration: none;
     padding: 5px 10px;
-    background-color: rgb(230, 90, 255);
-    color: black;
+    background-color: rgb(255, 71, 200);
+    color: rgb(255, 255, 255);
     border-radius: 5px;
+    font-size: 14px;
+}
+.post{
+    margin: 0 0 20px;
+    border: 3px dashed rgb(17, 225, 6);
+    padding: 10px 10px 20px;
+}
+.post p{
+    margin: 0 0 10px;
+}
+.post a, button{
+    background-color: rgb(42, 108, 221);
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+    font-style: none;
+    border: none;
+}
+.post b{
+    color: rgb(208, 111, 0);
 }

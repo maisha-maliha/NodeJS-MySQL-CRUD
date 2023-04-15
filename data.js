@@ -1,1 +1,0 @@
-let profile = [{ id : "2",name: "nei huga", email: "nejihuga@gmail.com"},{ id : "92",name: "maisha", email: "mail%40hamil.com"},]; let posts = [{ postid : "1",title: "heading", content: "content", personame: "maisha"},]; export {profile, posts};
