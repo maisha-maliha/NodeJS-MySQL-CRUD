@@ -9,26 +9,17 @@ var connection = mysql.createConnection({
 connection.connect();
 
 function calling(){
-  var userinfo = 'let profile = [';
-  connection.query('SELECT * FROM userinfo;', function (error, results, fields) {
-    if (error) throw error;
-    results.forEach(element => {
-      userinfo += '{ id : "'+element.ID+'",'+ 'name: "'+element.PersonName+'", '+'email: "'+element.mail+'"},';
-    });
-    userinfo += '];';
-    fs.writeFile('./sources/data.js',userinfo, err =>{if(err) console.log(err)});
-  });
   // GET DATA FROM BLOGPOST TABLE
   connection.query('SELECT * FROM blogpost', (err, result, fields)=>{
     if (err) throw err;
     userinfo = ' let posts = [';
     result.forEach(element => {
-      userinfo += '{ postid : "'+element.postID+'",'+ 'title: "'+element.title+'", '+'content: "'+element.content+'", '+'personame: "' + element.personame + '"},';
+      userinfo += '{ postid : "'+element.postID+'",'+ 'title: "'+element.title+'", '+'content: "'+element.content+'", '+'personame: "' + element.personame + '", '+ 'mail: "' + element.mail +' "},';
     });
-    userinfo += ']; export {profile, posts};'
-    fs.appendFile("./sources/data.js", userinfo, (err) => {if (err) console.log(err)});
+    userinfo += ']; export {posts};'
+    fs.writeFile("./sources/data.js", userinfo, (err) => {if (err) console.log(err)});
   });
-  console.log("database triggered");
+  //console.log("database triggered");
 }
 calling();
 module.exports = {calling : calling, connection : connection};

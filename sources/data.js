@@ -1,1 +1,1 @@
-let profile = [{ id : "2",name: "nei huga", email: "nejihuga@gmail.com"},{ id : "92",name: "maisha", email: "mail%40hamil.com"},{ id : "93",name: "Maisha", email: "mainl%40mail.com"},{ id : "94",name: "maisha", email: "mail%40hamil.com"},]; let posts = [{ postid : "1",title: "tile 2", content: "content 2", personame: "maisha"},{ postid : "2",title: "this is title", content: "this is content", personame: "Maisha"},{ postid : "3",title: "heading", content: "content", personame: "maisha"},]; export {profile, posts};
+ let posts = []; export {posts};

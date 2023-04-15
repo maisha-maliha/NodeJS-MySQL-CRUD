@@ -39,7 +39,7 @@ a{
     border: 3px dashed rgb(17, 225, 6);
     padding: 10px 10px 20px;
 }
-.post p{
+.post p,p{
     margin: 0 0 10px;
 }
 .post a, button{
