@@ -18,10 +18,10 @@ http.createServer((req, res)=>{
             ResponseInfo.forEach(element => {
                 data = element.split("=");
                 ResponseObj += `"${data[0]}" : "${data[1].split('+').join(' ')}",`;
-                ResponseObj.replace('%40','@');
             });
             ResponseObj += '"nothing":"nothing"}';
             ResponseInfo = JSON.parse(ResponseObj);
+            console.log(ResponseInfo);
             // SEND DATA ONLY IF ALL INPUTS HAVE VALUE
             if(ResponseInfo.name != '' && ResponseInfo.mail != "" && ResponseInfo.heading !='' && ResponseInfo.content!=''){
                 // COUNTING TOTAL ROWS IN BLOGPOST
